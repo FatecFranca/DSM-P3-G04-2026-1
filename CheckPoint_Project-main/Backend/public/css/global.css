@@ -146,3 +146,109 @@ body {
 .btn-voltar:hover {
     transform: scale(1.1);
 }
+/* Adicione isso ao seu arquivo de CSS global ou de componentes */
+.modal-fundo.mostrar-modal {
+    display: flex !important;
+}
+
+/* Garanta que o fundo esteja invisível por padrão */
+.modal-fundo {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 3000;
+    justify-content: center;
+    align-items: center;
+}
+/* MODAL DE SALDO - DESIGN PREMIUM */
+#modalSaldo .modal-caixa {
+    background: rgba(15, 10, 45, 0.95); /* Roxo bem profundo */
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(138, 45, 255, 0.3); /* Borda neon suave */
+    border-radius: 24px;
+    padding: 40px;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(138, 45, 255, 0.1);
+    animation: abrirSuave 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#modalSaldo h3 {
+    font-size: 1.4rem;
+    color: #fff;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* O INPUT GIGANTE E ESTILIZADO */
+#input-novo-saldo {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 2.2rem; /* Valor fica grande e elegante */
+    font-weight: 800;
+    color: #8a2dff; /* Cor Neon no valor */
+    text-align: center;
+    outline: none;
+    transition: all 0.3s;
+    margin-bottom: 30px;
+}
+
+#input-novo-saldo:focus {
+    background: rgba(138, 45, 255, 0.05);
+    border-color: #8a2dff;
+    box-shadow: 0 0 15px rgba(138, 45, 255, 0.3);
+}
+
+/* BOTÕES ALINHADOS E MODERNOS */
+.botoes-modal {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-continuar {
+    flex: 2;
+    background: linear-gradient(135deg, #8a2dff, #5318d8);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-voltar-modal {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.05);
+    color: #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-continuar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(138, 45, 255, 0.4);
+}
+
+.btn-voltar-modal:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+/* ANIMAÇÃO DE ENTRADA */
+@keyframes abrirSuave {
+    from { opacity: 0; transform: scale(0.9) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
