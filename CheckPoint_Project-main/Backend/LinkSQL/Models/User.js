@@ -6,8 +6,11 @@ const UserSchema = new mongoose.Schema({
     senha: { type: String, required: true },
     Nome: { type: String, default: "" },
     Idade: { type: Number, default: null },
-    Valor: { type: Number, default: 0 }, // Meta de gastos
-    codigo: { type: String, default: null }, // Para recuperação de senha
+    Valor: { type: Number, default: 0 },
+    amigos: [{
+        usuarioId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        status: { type: String, enum: ['pendente', 'aceito'], default: 'pendente' }
+    }],
     criadoEm: { type: Date, default: Date.now }
 });
 

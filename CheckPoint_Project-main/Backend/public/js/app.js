@@ -273,3 +273,78 @@ function atualizarSemaforo(porcentagem) {
         // imgBoneco.src = "/img/personagem-desespero.png";
     }
 }
+let abaAtual = 'buscar';
+
+function abrirModalAmigos(e) {
+    if(e) e.preventDefault();
+    document.getElementById("modalAmigos").style.display = "flex";
+    mudarAba('buscar');
+}
+
+function fecharModalAmigos() {
+    document.getElementById("modalAmigos").style.display = "none";
+}
+
+function mudarAba(aba) {
+    abaAtual = aba;
+    document.querySelectorAll('.aba-btn').forEach(btn => btn.classList.remove('ativa'));
+    event.target.classList.add('ativa');
+    
+    if (aba === 'buscar') {
+        buscarAmigos();
+    } else if (aba === 'pedidos') {
+        // Lógica para listar convites pendentes
+        document.getElementById("listaSocial").innerHTML = "<p class='msg-vazio'>Nenhum pedido pendente.</p>";
+    } else {
+        // Lógica para listar amigos aceitos
+        listarMeusAmigos();
+    }
+}
+
+function buscarAmigos() {
+    const busca = document.getElementById("inputBuscaAmigo").value;
+    const lista = document.getElementById("listaSocial");
+
+    // Só pesquisa se tiver pelo menos 2 letras
+    if (busca.length < 2) {
+        lista.innerHTML = "<p class='msg-vazio'>Digite pelo menos 2 letras...</p>";
+        return;
+    }
+
+    fetch(`/friends/search?nick=${busca}`)
+        .then(res => res.json())
+        .then(data => {
+            lista.innerHTML = ""; // Limpa a lista atual
+
+            if (!data.ok || data.usuarios.length === 0) {
+                lista.innerHTML = "<p class='msg-vazio'>Nenhum usuário encontrado com esse apelido.</p>";
+                return;
+            }
+
+            data.usuarios.forEach(u => {
+                const item = document.createElement("div");
+                item.className = "user-item";
+                item.innerHTML = `
+                    <div class="user-info">
+                        <span>${u.Nick}</span>
+                        <small>${u.Nome || 'Sem nome'}</small>
+                    </div>
+                    <button class="btn-add-amigo" onclick="enviarConvite('${u._id}')">Adicionar</button>
+                `;
+                lista.appendChild(item);
+            });
+        })
+        .catch(err => console.error("Erro no fetch de amigos:", err));
+}
+
+function enviarConvite(id) {
+    fetch('/friends/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuarioId: id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.ok) alert("Convite enviado!");
+    });
+}

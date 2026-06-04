@@ -252,3 +252,224 @@ body {
     from { opacity: 0; transform: scale(0.9) translateY(20px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
 }
+
+/* --- MODAL SOCIAL --- */
+.modal-caixa-amigos {
+    background: rgba(15, 11, 30, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--roxo-brilhante);
+    width: 400px;
+    max-height: 80vh;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 50px rgba(138, 45, 255, 0.2);
+}
+
+.modal-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.btn-fechar-modal {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.busca-container { padding: 15px; }
+.busca-container input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+.busca-container input:focus { border-color: var(--roxo-brilhante); }
+
+.abas-social {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.aba-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-dim);
+    padding: 10px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.aba-btn.ativa { color: var(--roxo-brilhante); border-bottom: 2px solid var(--roxo-brilhante); }
+
+.lista-social-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+/* Item da lista de pessoas */
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255,255,255,0.02);
+    margin-bottom: 8px;
+    border-radius: 10px;
+    transition: 0.2s;
+}
+
+.user-item:hover { background: rgba(255,255,255,0.05); }
+
+.user-info span { display: block; font-size: 0.9rem; font-weight: bold; }
+.user-info small { color: var(--text-dim); font-size: 0.7rem; }
+
+.btn-add-amigo {
+    background: var(--roxo-brilhante);
+    border: none;
+    color: white;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.btn-add-amigo:hover { background: var(--roxo-neon); }
+/* --- HERO SECTION --- */
+.secao-boas-vindas {
+    padding-top: 25px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+
+.botao-criar-role {
+    background: linear-gradient(135deg, var(--roxo-brilhante), #4a0bc7);
+    color: white;
+    padding: 12px 40px;
+    border-radius: 50px;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(138, 45, 255, 0.3);
+    transition: 0.3s;
+}
+
+.botao-criar-role:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(138, 45, 255, 0.5); }
+
+/* --- CARDS (GRID DE 3 COLUNAS) --- */
+.conteudo-principal {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+}
+
+.container-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards iguais lado a lado */
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+}
+
+.card-informativo, .amigos .container-amigos {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
+    padding: 30px 20px;
+    border-radius: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+/* Ajuste específico para o bloco de amigos se comportar como card */
+#amigos { display: contents; } /* Faz a div amigos não quebrar o grid */
+
+.card-informativo:hover, .container-amigos:hover {
+    border-color: var(--roxo-brilhante);
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-5px);
+}
+
+.card-informativo h2, .container-amigos h3 {
+    font-size: 0.75rem;
+    color: var(--roxo-brilhante);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-weight: 800;
+    margin-bottom: 15px;
+}
+
+.valor-destaque { font-size: 2rem; font-weight: 900; margin-bottom: 15px; }
+
+.botao-card, .btn-voltar-modal {
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+    text-transform: uppercase;
+}
+
+.botao-card:hover, .btn-voltar-modal:hover { background: white; color: black; }
+
+/* --- SEMÁFORO HORIZONTAL --- */
+.rodape-status {
+    padding: 20px 0 30px;
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.container-status-caixa {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 12px 30px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.semaforo-caixa {
+    display: flex;
+    flex-direction: row; /* Semáforo horizontal para economizar espaço */
+    gap: 10px;
+    background: #000;
+    padding: 8px 12px;
+    border-radius: 50px;
+}
+
+.luz-moderna { width: 22px; height: 22px; border-radius: 50%; background: #111; }
+.vermelha.aceso { background: #ff3b3b; box-shadow: 0 0 15px #ff3b3b; }
+.amarela.aceso { background: #ffcc00; box-shadow: 0 0 15px #ffcc00; }
+.verde.aceso { background: #00ff88; box-shadow: 0 0 15px #00ff88; }
+
+#texto-status { font-size: 1rem; font-weight: 700; margin: 0; }
+.img-status-boneco { width: 70px; animation: flutuar 3s infinite ease-in-out; }
+
+@keyframes flutuar { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
