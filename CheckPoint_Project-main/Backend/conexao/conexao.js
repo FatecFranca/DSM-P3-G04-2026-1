@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-// Substitua <USUARIO>, <SENHA> e <CLUSTER> pelos seus dados do MongoDB Atlas
-// Ou use a string que o Atlas te forneceu no "Connect"
-const mongoURI = "mongodb+srv://CheckPoint:1234@checkpoint.rltzhlg.mongodb.net/Checkpoint?retryWrites=true&w=majority";
+
+const mongoURI = "mongodb://CheckPoint:1234@ac-lmy2cgq-shard-00-00.rltzhlg.mongodb.net:27017,ac-lmy2cgq-shard-00-01.rltzhlg.mongodb.net:27017,ac-lmy2cgq-shard-00-02.rltzhlg.mongodb.net:27017/?ssl=true&replicaSet=atlas-c2f5wm-shard-0&authSource=admin&appName=CheckPoint";
 
 mongoose.connect(mongoURI)
 .then(() => {
