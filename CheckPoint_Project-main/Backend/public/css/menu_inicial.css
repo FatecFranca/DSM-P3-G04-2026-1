@@ -1,0 +1,215 @@
+/* ===== CONFIG GLOBAL ===== */
+:root {
+    --roxo: #8a2dff;
+    --roxo-escuro: #110833;
+    --glass: rgba(255,255,255,0.05);
+    --borda: rgba(255,255,255,0.1);
+
+    --verde: #00ff88;
+    --amarelo: #ffcc00;
+    --vermelho: #ff3b3b;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
+}
+
+body{
+    background:
+        linear-gradient(rgba(0,0,0,.75), rgba(13,6,32,.95)),
+        url('../img/fundo.jpg') center/cover fixed;
+    color:white;
+    min-height:100vh;
+}
+
+/* ===== HEADER ===== */
+.barra-superior{
+    height:70px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.5);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--borda);
+}
+
+.container-header{
+    width:100%;
+    max-width:1200px;
+    padding:0 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ===== BANNER ===== */
+.secao-boas-vindas{
+    text-align:center;
+    padding:60px 20px;
+}
+
+.conteudo-banner{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:25px;
+}
+
+.conteudo-banner h1{
+    font-size:2rem;
+    font-weight:900;
+    line-height:1.2;
+    max-width:800px;
+}
+
+/* ===== BOTÕES ===== */
+.botao-criar-role,
+.botao-card{
+    border:none;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.botao-criar-role{
+    background:linear-gradient(135deg,var(--roxo),#4a0bc7);
+    color:white;
+    padding:15px 40px;
+    border-radius:50px;
+    font-weight:bold;
+    box-shadow:0 0 20px rgba(138,45,255,.4);
+}
+
+.botao-criar-role:hover{
+    transform:scale(1.05);
+}
+
+.botao-card{
+    width:100%;
+    padding:12px;
+    border-radius:10px;
+    background:var(--glass);
+    border:1px solid var(--borda);
+    color:white;
+}
+
+.botao-card:hover{
+    background:white;
+    color:black;
+}
+
+/* ===== CARDS ===== */
+.container-cards{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    flex-wrap:wrap;
+    padding:20px;
+}
+
+.card-informativo{
+    width:350px;
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+
+    background:var(--glass);
+    backdrop-filter:blur(15px);
+    border:1px solid var(--borda);
+
+    transition:.3s;
+}
+
+.card-informativo:hover{
+    transform:translateY(-5px);
+}
+
+.card-informativo h2{
+    font-size:.8rem;
+    letter-spacing:2px;
+    color:#aaa;
+    text-transform:uppercase;
+}
+
+.valor-destaque{
+    font-size:3rem;
+    font-weight:900;
+    margin:15px 0;
+}
+
+/* ===== RODAPÉ / SEMÁFORO ===== */
+.rodape-status{
+    display:flex;
+    justify-content:center;
+    padding:40px 0;
+}
+
+.container-status-caixa{
+    display:flex;
+    align-items:center;
+    gap:30px;
+
+    padding:20px 40px;
+    border-radius:30px;
+
+    background:rgba(0,0,0,.3);
+    backdrop-filter:blur(10px);
+}
+
+.semaforo-caixa{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+
+    padding:15px;
+    border-radius:50px;
+    background:black;
+}
+
+.luz-moderna{
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    background:#111;
+}
+
+.vermelha.aceso{
+    background:var(--vermelho);
+    box-shadow:0 0 20px var(--vermelho);
+}
+
+.amarela.aceso{
+    background:var(--amarelo);
+    box-shadow:0 0 20px var(--amarelo);
+}
+
+.verde.aceso{
+    background:var(--verde);
+    box-shadow:0 0 20px var(--verde);
+}
+
+/* ===== TEXTO STATUS ===== */
+.label-status{
+    font-size:.7rem;
+    letter-spacing:2px;
+    color:var(--roxo);
+    font-weight:800;
+}
+
+#texto-status{
+    font-size:1.5rem;
+    font-weight:800;
+}
+
+/* ===== PERSONAGEM ===== */
+.img-status-boneco{
+    width:100px;
+    animation:flutuar 3s infinite ease-in-out;
+}
+
+@keyframes flutuar{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-8px); }
+}

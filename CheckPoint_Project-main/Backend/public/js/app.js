@@ -1,0 +1,391 @@
+window.addEventListener('load', () => {
+    const paginaAtual = window.location.pathname;
+    verificarSessao();
+    
+    if (paginaAtual.includes('menu_inicial.html')) {
+        carregarDadosSemaforo();
+        atualizarContagemRoles();
+    }
+});
+
+// === MENU DE PERFIL (DROPDOWN) ===
+function alternarMenu(event) {
+    if (event) event.stopPropagation();
+    const menu = document.getElementById("menuUsuario");
+    if (menu) {
+        menu.classList.toggle("mostrar");
+    }
+}
+
+// Fecha o menu se clicar em qualquer outro lugar da tela
+window.addEventListener('click', (e) => {
+    const menu = document.getElementById("menuUsuario");
+    if (menu && !e.target.closest('.area-usuario')) {
+        menu.classList.remove('mostrar');
+    }
+});
+
+// === SESSÃO ===
+function verificarSessao() {
+    fetch('/users/sessao')
+        .then(response => response.json())
+        .then(data => {
+            if (data.logado) {
+                const elNome = document.getElementById('nome-usuario');
+                if (elNome) elNome.innerText = data.usuario.Nick;
+                
+                const elValor = document.getElementById('textoSaldo');
+                if (elValor && data.usuario.Valor) {
+                    elValor.innerText = parseFloat(data.usuario.Valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                }
+            } else {
+                if (!window.location.pathname.includes('index.html')) {
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+}
+
+// === LÓGICA DO SEMÁFORO ===
+function carregarDadosSemaforo() {
+    fetch('/gastos/listar')
+        .then(res => res.json())
+        .then(data => {
+            if (data.ok) {
+                const gasto = parseFloat(data.total) || 0;
+                const meta = parseFloat(data.renda) || 0;
+                let porcentagem = meta > 0 ? (gasto / meta) * 100 : (gasto > 0 ? 100 : 0);
+                atualizarSemaforo(porcentagem);
+            }
+        });
+}
+
+function atualizarSemaforo(porcentagem) {
+    const luzVermelha = document.getElementById("luz-vermelha");
+    const luzAmarela = document.getElementById("luz-amarela");
+    const luzVerde = document.getElementById("luz-verde");
+    const textoMsg = document.getElementById("texto-status");
+
+    if (!luzVermelha || !textoMsg) return;
+
+    luzVermelha.classList.remove("aceso");
+    luzAmarela.classList.remove("aceso");
+    luzVerde.classList.remove("aceso");
+
+    if (porcentagem < 80) {
+        luzVerde.classList.add("aceso");
+        textoMsg.innerText = "Tudo tranquilo! Gastos sob controle.";
+        textoMsg.className = "msg-verde"; 
+    } else if (porcentagem < 100) {
+        luzAmarela.classList.add("aceso");
+        textoMsg.innerText = "Atenção! Você está perto do limite.";
+        textoMsg.className = "msg-amarela"; 
+    } else {
+        luzVermelha.classList.add("aceso");
+        textoMsg.innerText = "Cuidado! Orçamento estourado!";
+        textoMsg.className = "msg-vermelha"; 
+    }
+}
+
+// === MODAL SALDO (Meta Mensal) ===
+function abrirModalSaldo(event) {
+    if(event) event.preventDefault();
+    const modal = document.getElementById("modalSaldo");
+    if(modal) modal.classList.add("mostrar-modal");
+}
+
+function fecharModalSaldo() {
+    const modal = document.getElementById("modalSaldo");
+    if(modal) modal.classList.remove("mostrar-modal");
+}
+
+function salvarNovoSaldo() {
+    const input = document.getElementById("input-novo-saldo");
+    let valorLimpo = input.value.replace("R$", "").replace(/\./g, "").replace(",", ".").trim();
+    const valorFinal = parseFloat(valorLimpo);
+
+    if (isNaN(valorFinal)) return alert("Valor inválido.");
+
+    fetch('/users/saldo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Valor: valorFinal })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            fecharModalSaldo();
+            location.reload(); // Recarrega para atualizar tudo
+        }
+    });
+}
+
+function atualizarContagemRoles() {
+    const elementoQtd = document.getElementById("qtd-roles");
+    if (elementoQtd) {
+        fetch("/events/quantidade")
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) elementoQtd.textContent = data.total;
+            });
+    }
+}
+
+// Formatação de moeda universal
+function formatarMoeda(elemento) {
+    let valor = elemento.value.replace(/\D/g, "");
+    valor = (valor / 100).toFixed(2) + "";
+    valor = valor.replace(".", ",");
+    valor = valor.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+    valor = valor.replace(/(\d)(\d{3}),/g, "$1.$2,");
+    elemento.value = "R$ " + valor;
+}
+
+// public/js/app.js
+
+window.addEventListener('load', () => {
+    verificarSessao();
+});
+
+// Função para abrir/fechar o menu do perfil
+function alternarMenu(event) {
+    if (event) {
+        event.stopPropagation(); // Impede o clique de fechar o menu na mesma hora
+    }
+    const menu = document.getElementById("menuUsuario");
+    if (menu) {
+        menu.classList.toggle("mostrar");
+        console.log("Menu alternado!"); // Debug para você ver no F12
+    } else {
+        console.error("Erro: Elemento #menuUsuario não encontrado no HTML!");
+    }
+}
+
+// Fecha o menu se o usuário clicar em qualquer outro lugar da tela
+window.onclick = function(event) {
+    if (!event.target.closest('.area-usuario')) {
+        const menu = document.getElementById("menuUsuario");
+        if (menu && menu.classList.contains('mostrar')) {
+            menu.classList.remove('mostrar');
+        }
+    }
+    
+    // Fecha o modal de saldo se clicar fora dele (usado na home)
+    const modalSaldo = document.getElementById("modalSaldo");
+    if (event.target == modalSaldo) {
+        fecharModalSaldo();
+    }
+}
+
+function verificarSessao() {
+    fetch('/users/sessao')
+        .then(res => res.json())
+        .then(data => {
+            if (data.logado) {
+                const elNome = document.getElementById('nome-usuario');
+                if (elNome) elNome.innerText = data.usuario.Nick;
+                
+                const elValor = document.getElementById('textoSaldo');
+                if (elValor && data.usuario.Valor) {
+                    elValor.innerText = parseFloat(data.usuario.Valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                }
+            } else {
+                // Se não estiver na index, redireciona para login
+                if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/') {
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+}
+
+// Funções do Modal de Saldo (Home)
+function abrirModalSaldo(event) {
+    if(event) event.preventDefault();
+    document.getElementById("modalSaldo").classList.add("mostrar-modal");
+}
+
+function fecharModalSaldo() {
+    document.getElementById("modalSaldo").classList.remove("mostrar-modal");
+}
+window.addEventListener('load', () => {
+    const paginaAtual = window.location.pathname;
+    verificarSessao();
+    
+    if (paginaAtual.includes('menu_inicial')) {
+        carregarDadosSemaforo();
+        atualizarContagemRoles();
+    }
+});
+
+function verificarSessao() {
+    fetch('/users/sessao')
+        .then(res => res.json())
+        .then(data => {
+            if (data.logado) {
+                const elNome = document.getElementById('nome-usuario');
+                if (elNome) elNome.innerText = data.usuario.Nick;
+                
+                const elSaldo = document.getElementById('textoSaldo');
+                if (elSaldo && data.usuario.Valor) {
+                    elSaldo.innerText = parseFloat(data.usuario.Valor).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                }
+            } else if (!window.location.pathname.includes('index')) {
+                window.location.href = 'index.html';
+            }
+        });
+}
+
+function alternarMenu(event) {
+    if (event) event.stopPropagation();
+    document.getElementById("menuUsuario").classList.toggle("mostrar");
+}
+
+window.onclick = function(e) {
+    if (!e.target.closest('.area-usuario')) {
+        const m = document.getElementById("menuUsuario");
+        if (m) m.classList.remove('mostrar');
+    }
+}
+function atualizarSemaforo(porcentagem) {
+    const luzVermelha = document.getElementById("luz-vermelha");
+    const luzAmarela = document.getElementById("luz-amarela");
+    const luzVerde = document.getElementById("luz-verde");
+    const textoMsg = document.getElementById("texto-status");
+    const imgBoneco = document.querySelector(".img-status-boneco");
+
+    // Limpa classes
+    [luzVermelha, luzAmarela, luzVerde].forEach(l => l.classList.remove("aceso"));
+
+    if (porcentagem < 80) {
+        luzVerde.classList.add("aceso");
+        textoMsg.innerText = "Tudo tranquilo! Gastos sob controle.";
+        textoMsg.className = "msg-verde";
+        // imgBoneco.src = "/img/personagem-feliz.png"; 
+    } else if (porcentagem < 100) {
+        luzAmarela.classList.add("aceso");
+        textoMsg.innerText = "Atenção! Você está perto do limite.";
+        textoMsg.className = "msg-amarela";
+        // imgBoneco.src = "/img/personagem-alerta.png";
+    } else {
+        luzVermelha.classList.add("aceso");
+        textoMsg.innerText = "Cuidado! Orçamento estourado!";
+        textoMsg.className = "msg-vermelha";
+        // imgBoneco.src = "/img/personagem-desespero.png";
+    }
+}
+let abaSocialAtual = 'buscar';
+
+function abrirModalAmigos(e) {
+    if(e) e.preventDefault();
+    document.getElementById("modalAmigos").style.display = "flex";
+    mudarAba('buscar');
+}
+
+function fecharModalAmigos() {
+    document.getElementById("modalAmigos").style.display = "none";
+}
+
+function mudarAba(aba) {
+    abaSocialAtual = aba;
+    // Estilo dos botões
+    document.querySelectorAll('.aba-btn').forEach(btn => btn.classList.remove('ativa'));
+    event.target.classList.add('ativa');
+    
+    const lista = document.getElementById("listaSocial");
+    lista.innerHTML = "<p class='msg-vazio'>Carregando...</p>";
+
+    if (aba === 'buscar') {
+        buscarAmigos();
+    } else {
+        // Para 'pedidos' e 'meus-amigos', usamos a mesma rota e filtramos no JS
+        fetch('/friends/list')
+            .then(res => res.json())
+            .then(data => {
+                lista.innerHTML = "";
+                const listaFiltrada = data.amigos.filter(a => 
+                    aba === 'pedidos' ? a.status === 'pendente' : a.status === 'aceito'
+                );
+
+                if (listaFiltrada.length === 0) {
+                    lista.innerHTML = `<p class='msg-vazio'>Nenhum registro encontrado em ${aba}.</p>`;
+                    return;
+                }
+
+                listaFiltrada.forEach(item => {
+                    const u = item.usuarioId;
+                    const htmlBtn = aba === 'pedidos' 
+                        ? `<button class="btn-add-amigo" onclick="aceitarPedido('${u._id}')">Aceitar</button>`
+                        : `<span style="color:var(--roxo-brilhante); font-size:0.8rem;">Amigo ✓</span>`;
+
+                    lista.innerHTML += `
+                        <div class="user-item">
+                            <div class="user-info">
+                                <span>${u.Nick}</span>
+                                <small>${u.Nome || 'Checkpoint User'}</small>
+                            </div>
+                            ${htmlBtn}
+                        </div>
+                    `;
+                });
+            });
+    }
+}
+
+function buscarAmigos() {
+    const busca = document.getElementById("inputBuscaAmigo").value;
+    const lista = document.getElementById("listaSocial");
+
+    if (abaSocialAtual !== 'buscar') return;
+    if (busca.length < 2) {
+        lista.innerHTML = "<p class='msg-vazio'>Digite o apelido de alguém...</p>";
+        return;
+    }
+
+    fetch(`/friends/search?nick=${busca}`)
+        .then(res => res.json())
+        .then(data => {
+            lista.innerHTML = "";
+            if (data.usuarios.length === 0) {
+                lista.innerHTML = "<p class='msg-vazio'>Nenhum usuário encontrado.</p>";
+                return;
+            }
+            data.usuarios.forEach(u => {
+                lista.innerHTML += `
+                    <div class="user-item">
+                        <div class="user-info">
+                            <span>${u.Nick}</span>
+                            <small>${u.Nome || ''}</small>
+                        </div>
+                        <button class="btn-add-amigo" onclick="enviarConvite('${u._id}')">Adicionar</button>
+                    </div>
+                `;
+            });
+        });
+}
+
+function enviarConvite(id) {
+    fetch('/friends/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuarioId: id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.ok) alert("Pedido enviado com sucesso!");
+    });
+}
+
+function aceitarPedido(id) {
+    fetch('/friends/accept', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ usuarioId: id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.ok) {
+            alert("Agora vocês são amigos!");
+            mudarAba('meus-amigos');
+        }
+    });
+}
