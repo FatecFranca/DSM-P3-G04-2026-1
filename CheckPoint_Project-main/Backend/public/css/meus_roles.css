@@ -304,6 +304,7 @@
 .card-body {
     background: #121212;
     padding: 20px;
+    border-bottom: 1px solid #333;
 }
 
 @keyframes fadeIn {
