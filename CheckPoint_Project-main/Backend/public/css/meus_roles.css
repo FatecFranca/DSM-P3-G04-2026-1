@@ -284,3 +284,29 @@
   #lista-eventos { grid-template-columns: 1fr; }
   .cabecalho-pagina { flex-direction: column; align-items: flex-start; }
 }
+
+/* Garante que o card abra corretamente */
+.card-role.aberto .card-body {
+    display: block !important;
+    animation: fadeIn 0.3s ease;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #1a1a1e;
+    cursor: pointer;
+    border-bottom: 1px solid #333;
+}
+
+.card-body {
+    background: #121212;
+    padding: 20px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
