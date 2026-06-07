@@ -358,3 +358,150 @@
 .btn-convidar-mais:hover {
     background: rgba(138, 45, 255, 0.1);
 }
+/* Importando as variáveis se necessário */
+@import url('global.css');
+
+.main-meus-roles {
+    padding: 40px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.titulo-pagina {
+    text-align: center;
+    margin-bottom: 40px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+/* Card Principal (Estilo Glassmorphism) */
+.card-role {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--borda-glass, rgba(255, 255, 255, 0.1));
+    border-radius: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: 0.3s;
+}
+
+.card-role:hover {
+    border-color: var(--roxo-brilhante, #8a2dff);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Cabeçalho do Card */
+.card-header {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.card-header span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Corpo do Card (Detalhes) */
+.card-body {
+    padding: 0 25px 25px 25px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* Elementos dentro do Card */
+.sessao-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    padding: 15px 0;
+}
+
+.sessao-divisao h4 {
+    color: var(--roxo-brilhante, #8a2dff);
+    margin: 15px 0 10px 0;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+/* Linha de participantes */
+.pagador-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+
+/* Botões dentro dos Cards */
+.btn-salvar-divisao, .btn-excluir {
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-salvar-divisao { background: #8a2dff; color: white; width: 100%; }
+.btn-excluir { background: #ff3b3b; color: white; }
+
+/* Botão Novo Rolê */
+.btn-novo-role {
+    display: block;
+    margin: 40px auto;
+    padding: 15px 40px;
+    background: linear-gradient(135deg, #8a2dff, #4a0bc7);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+    width: fit-content;
+}
+/* Container de cada linha de usuário */
+.pagador-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* O seletor flutuante de convite */
+.seletor-flutuante {
+    background: #1a0f40;
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 15px;
+    border: 1px solid var(--roxo-brilhante);
+}
+
+.item-amigo-convite {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.btn-pode-convidar {
+    background: #4a09ff;
+    border: none;
+    padding: 5px 12px;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}

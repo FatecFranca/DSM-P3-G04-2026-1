@@ -78,13 +78,10 @@
             <div id="modalSaldo" class="modal-fundo">
                 <div class="card-informativo">
                     <h3>Definir Orçamento Mensal:</h3>
-                    
-                    <!-- Input com formatação automática -->
                     <input type="text" id="input-novo-saldo" class="input-saldo-modal" placeholder="R$ 0,00" oninput="formatarMoeda(this)">
                     
                     <div class="botoes-modal">
                         <button class="btn-voltar-modal" onclick="fecharModalSaldo()">Cancelar</button>
-                        <!-- Botão chama a função via AJAX agora -->
                         <button class="btn-continuar" onclick="salvarNovoSaldo()">Continuar</button>
                     </div>
                 </div>
@@ -120,7 +117,6 @@
                 <div id="luz-verde" class="luz-moderna verde"></div>
             </div>
 
-            <!-- Texto com Tipografia Melhorada -->
             <div class="status-info">
                 <span class="label-status">STATUS FINANCEIRO</span>
                 <h2 id="texto-status" class="msg-vermelha">Cuidado! Orçamento estourado!</h2>
@@ -146,8 +142,7 @@
             </div>
 
             <div id="listaSocial" class="lista-social-scroll">
-                <!-- JS vai injetar os usuários aqui -->
-                <p class="msg-vazio">Digite um nome para buscar pessoas...</p>
+            <p class="msg-vazio">Digite um nome para buscar pessoas...</p>
             </div>
         </div>
     </div>
