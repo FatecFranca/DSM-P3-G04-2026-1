@@ -890,14 +890,43 @@
     return ok;
   }
 
-  function send() {
+ function send() {
     setLoad(true);
-    /* Fetch real:
-    fetch('/users/cadastro', { method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ Nick: f.nick.el.value.trim(), email: f.email.el.value.trim(), senha: f.password.el.value })
-    }).then(r=>r.json()).then(()=>{ setLoad(false); showSuccess(); }).catch(()=>setLoad(false)); */
-    setTimeout(() => { setLoad(false); showSuccess(); }, 1800);
-  }
+
+    fetch('/users/cadastro', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            Nick:  f.nick.el.value.trim(),
+            email: f.email.el.value.trim(),
+            senha: f.password.el.value
+        })
+    })
+    .then(r => r.json().then(data => ({ ok: r.ok, data })))
+    .then(({ ok, data }) => {
+        setLoad(false);
+        if (!ok) {
+            const msg = data.mensagem || 'Erro ao criar conta.';
+            if (msg.toLowerCase().includes('e-mail') || msg.toLowerCase().includes('email')) {
+                showErr(f.email.el, f.email.err, msg);
+            } else if (msg.toLowerCase().includes('nick')) {
+                showErr(f.nick.el, f.nick.err, msg);
+            } else {
+                showErr(f.email.el, f.email.err, msg);
+            }
+            shake();
+        } else {
+            showSuccess(); // mostra a tela de sucesso
+            // após 2s redireciona pro menu (sessão já foi salva no backend)
+            setTimeout(() => window.location.href = '/menu_inicial.html', 2000);
+        }
+    })
+    .catch(() => {
+        setLoad(false);
+        showErr(f.email.el, f.email.err, 'Não foi possível conectar ao servidor.');
+        shake();
+    });
+}
 
   function showSuccess() {
     displayNick.textContent = f.nick.el.value.trim();
