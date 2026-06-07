@@ -58,20 +58,31 @@ function renderizarDetalhes(ev, container, souDono, convitePendente, jaConfirmad
     fetch(`/events/${ev._id}`)
         .then(r => r.json())
         .then(data => {
-            const eventoFull = data.evento;
+            const evento = data.evento; 
             const valorTotal = data.valorTotal;
-            const todosParticipantes = [eventoFull.fk_idUsuario, ...eventoFull.confirmados, ...eventoFull.convidados];
-
+            
+            // Tratamento caso a data venha vazia ou inválida
+            const dataFormatada = evento.dataEvento ? new Date(evento.dataEvento).toLocaleDateString('pt-BR') : "Data não definida";
+            
+            // Array com todos os participantes (Dono + Confirmados + Convidados)
+            const todosParticipantes = [evento.fk_idUsuario, ...evento.confirmados, ...evento.convidados];
+            
             let htmlParticipantes = "";
+            
             todosParticipantes.forEach(p => {
-                const isDono = p._id === eventoFull.fk_idUsuario._id;
-                const isPendente = eventoFull.convidados.some(c => c._id === p._id);
-                const valorSalvo = eventoFull.divisaoManual.find(d => d.usuarioId === p._id)?.valor || (valorTotal / (eventoFull.confirmados.length + 1));
+                // p pode ser null caso o populate falhe, proteção básica:
+                if (!p) return; 
+
+                const isDono = p._id === evento.fk_idUsuario._id;
+                const isPendente = evento.convidados.some(c => c._id === p._id);
+                
+                // Busca o valor definido manualmente ou divide o total
+                const valorSalvo = evento.divisaoManual.find(d => d.usuarioId === p._id)?.valor || (valorTotal / (evento.confirmados.length + 1));
 
                 htmlParticipantes += `
                     <div class="pagador-row">
                         <div class="user-meta">
-                            <span>${p.Nick} ${isDono ? '👑' : ''} ${isPendente ? '<small>(Pendente)</small>' : ''}</span>
+                            <span>${p.Nick || 'Usuário'} ${isDono ? '👑' : ''} ${isPendente ? '<small>(Pendente)</small>' : ''}</span>
                             ${souDono && !isDono ? `<button class="btn-mini-remover" onclick="alterarParticipante('${ev._id}', '${p._id}', 'remover')">Remover</button>` : ''}
                         </div>
                         ${souDono 
@@ -83,8 +94,14 @@ function renderizarDetalhes(ev, container, souDono, convitePendente, jaConfirmad
             });
 
             container.innerHTML = `
+                <div class="sessao-info" style="margin-bottom:15px; border-bottom:1px solid #444; padding-bottom:10px;">
+                    <p><strong>📍 Local:</strong> ${evento.localEvento || 'Não informado'}</p>
+                    <p><strong>📅 Data:</strong> ${dataFormatada}</p>
+                    <p><strong>👥 Total de Participantes:</strong> ${evento.QuantParticipantes}</p>
+                </div>
+
                 <div class="sessao-divisao">
-                    <h4>👥 Participantes e Gastos (Total: R$ ${valorTotal.toFixed(2)})</h4>
+                    <h4>👥 Divisão de Gastos (Total: R$ ${valorTotal.toFixed(2)})</h4>
                     <div class="lista-divisao-manual">${htmlParticipantes}</div>
                     
                     ${souDono ? `
@@ -105,6 +122,10 @@ function renderizarDetalhes(ev, container, souDono, convitePendente, jaConfirmad
                 </div>
             `;
             if(souDono) validarSoma(valorTotal, ev._id);
+        })
+        .catch(err => {
+            console.error("Erro ao carregar detalhes:", err);
+            container.innerHTML = "<p>Erro ao carregar detalhes do evento.</p>";
         });
 }
 
@@ -183,6 +204,7 @@ function alterarParticipante(idEvento, idUsuario, acao) {
 
 function validarSoma(total, id) {
     const inputs = document.querySelectorAll('.input-divisao');
+    
     let soma = 0;
     inputs.forEach(i => soma += parseFloat(i.value) || 0);
     const diff = total - soma;
