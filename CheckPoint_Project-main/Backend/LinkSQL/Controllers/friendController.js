@@ -1,7 +1,6 @@
 const User = require('../Models/User');
 
 const FriendController = {
-    // Busca usuários para novos amigos
     buscarUsuarios: async (req, res) => {
         try {
             const { nick } = req.query;
@@ -14,13 +13,19 @@ const FriendController = {
         } catch (err) { res.status(500).json({ ok: false }); }
     },
 
-    // Enviar solicitação (O destinatário recebe o ID do remetente como pendente)
     enviarSolicitacao: async (req, res) => {
         try {
             const meuId = req.session.usuarioLogado._id;
             const targetId = req.body.usuarioId;
 
-            // Adiciona o remetente na lista de amigos do destinatário com status pendente
+            // Verifica se já existe
+            const destinatario = await User.findById(targetId);
+            const jaExiste = destinatario.amigos.find(a => a.usuarioId.toString() === meuId.toString());
+
+            if (jaExiste) {
+                return res.status(400).json({ ok: false, msg: "Solicitação já enviada!" });
+            }
+
             await User.findByIdAndUpdate(targetId, {
                 $addToSet: { amigos: { usuarioId: meuId, status: 'pendente' } }
             });
