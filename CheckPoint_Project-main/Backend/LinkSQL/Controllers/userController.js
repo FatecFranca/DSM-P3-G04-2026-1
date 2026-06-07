@@ -2,22 +2,37 @@ const User = require('../Models/User');
 const bcrypt = require('bcrypt');
 
 const UserController = {
-    cadastrar: async (req, res) => {
-        try {
-            const { Nick, email, senha } = req.body;
-            if (!Nick || !email || !senha) return res.status(400).json({ sucesso: false, mensagem: "Preencha tudo!" });
+   cadastrar: async (req, res) => {
+    try {
+        const { Nick, email, senha } = req.body;
+        if (!Nick || !email || !senha)
+            return res.status(400).json({ sucesso: false, mensagem: "Preencha tudo!" });
 
-            const senhaCripto = await bcrypt.hash(senha, 10);
-            const novoUsuario = new User({ Nick, email, senha: senhaCripto });
-
-            await novoUsuario.save();
-            req.session.usuarioLogado = novoUsuario;
-            req.session.save(() => res.redirect("/menu_inicial.html"));
-        } catch (erro) {
-            console.error(erro);
-            res.status(400).json({ sucesso: false, mensagem: "Nick ou Email já cadastrado." });
+        // Verifica duplicata antes de tentar salvar
+        const jaExiste = await User.findOne({ $or: [{ email }, { Nick }] });
+        if (jaExiste) {
+            const campo = jaExiste.email === email ? 'E-mail' : 'Nick';
+            return res.status(409).json({ sucesso: false, mensagem: `${campo} já cadastrado.` });
         }
-    },
+
+        const senhaCripto = await bcrypt.hash(senha, 10);
+        const novoUsuario = new User({ Nick, email, senha: senhaCripto });
+        await novoUsuario.save();
+
+        req.session.usuarioLogado = novoUsuario;
+        req.session.save(() => {
+            res.status(201).json({ sucesso: true, mensagem: "Conta criada!" });
+        });
+
+    } catch (erro) {
+        console.error(erro);
+        if (erro.code === 11000) {
+            const campo = Object.keys(erro.keyPattern)[0];
+            return res.status(409).json({ sucesso: false, mensagem: `${campo} já está em uso.` });
+        }
+        res.status(500).json({ sucesso: false, mensagem: "Erro interno." });
+    }
+},
 
     login: async (req, res) => {
         try {
