@@ -1,65 +1,160 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificar Código | Checkpoint</title>
-    <link rel="icon" href="img/icon.png" type="image/png" sizes="32x32">
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/media.css">
-
-    <!-- JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkpoint — Verificar Código</title>
+  <link rel="icon" href="img/icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --accent: #8b5cf6;
+      --accent-bright: #a78bfa;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+    body {
+      font-family: var(--font-body);
+      background: #0d0720;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      padding: 48px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(167,139,250,0.6);
+      margin-bottom: 32px;
+    }
+    .icone {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .campo-codigo {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    input[name="codigo"] {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 800;
+      font-family: var(--font-display);
+      color: var(--accent-bright);
+      letter-spacing: 6px;
+      outline: none;
+      transition: all 0.2s;
+    }
+    input[name="codigo"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.2);
+      background: rgba(139,92,246,0.06);
+    }
+    .timer {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 24px;
+    }
+    .timer span { color: var(--accent-bright); font-weight: 700; }
+    button[type="submit"] {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.25s;
+      margin-bottom: 20px;
+    }
+    button[type="submit"]:hover {
+      background: var(--accent-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139,92,246,0.4);
+    }
+    .voltar-link {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .voltar-link a { color: var(--accent-bright); }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
 </head>
-
 <body>
 
-<div id="container">
+<div class="card">
+  <div class="logo">Checkpoint</div>
+  <div class="icone">📧</div>
+  <h1>Verifique seu email</h1>
+  <p>Enviamos um código de 6 dígitos para o seu email. Verifique também a caixa de spam.</p>
 
-    <div class="banner">
-        <div class="checkpoint-overlay">CHECKPOINT</div>
-        <img src="img/login.png" alt="imagem-login">
-        <p style="color: #fff;">
-            Verifique seu código de autenticação enviado para seu email.
-            <br>Se não encontrar, revise sua caixa de spam.
-        </p>
-    </div>
+  <form action="/users/verificar" method="POST">
+    <input type="text" name="codigo" placeholder="000000" maxlength="6" required autocomplete="one-time-code">
+    <p class="timer">O código expira em <span>5:00</span></p>
+    <button type="submit">Validar código</button>
+  </form>
 
-    <div class="box-login">
-
-        <h1>Insira o código<br>para continuar</h1>
-
-        <form action="/users/verificar" method="POST" class="box-account">
-
-            <h2>Digite o código recebido</h2>
-
-            <input 
-                type="text" 
-                name="codigo" 
-                id="codigo" 
-                placeholder="Código de verificação" 
-                maxlength="6"
-                required
-            >
-
-            <p style="text-align:center; font-size: 14px;">
-                O código expira em 5 minutos.
-            </p>
-
-            <button type="submit">Validar código</button>
-        </form>
-
-    </div>
-
+  <p class="voltar-link">Voltou para a tela errada? <a href="index.html">← Login</a></p>
 </div>
 
-<a href="index.html">
-    <div id="bubble">
-        <img src="img/user.png" alt="icone-usuário" title="voltar">
-    </div>
-</a>
+<script>
+  let segundos = 300;
+  const timerEl = document.querySelector('.timer span');
+  const intervalo = setInterval(() => {
+    segundos--;
+    const m = Math.floor(segundos / 60);
+    const s = segundos % 60;
+    timerEl.textContent = `${m}:${s.toString().padStart(2,'0')}`;
+    if (segundos <= 0) {
+      clearInterval(intervalo);
+      timerEl.textContent = 'expirado';
+      timerEl.style.color = '#f87171';
+    }
+  }, 1000);
+</script>
 
 </body>
 </html>

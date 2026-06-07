@@ -1,215 +1,226 @@
-/* ===== CONFIG GLOBAL ===== */
-:root {
-    --roxo: #8a2dff;
-    --roxo-escuro: #110833;
-    --glass: rgba(255,255,255,0.05);
-    --borda: rgba(255,255,255,0.1);
+/* ═══════════════════════════════════════
+   MENU INICIAL CSS
+═══════════════════════════════════════ */
 
-    --verde: #00ff88;
-    --amarelo: #ffcc00;
-    --vermelho: #ff3b3b;
+/* HERO */
+.secao-boas-vindas {
+  padding: 56px 24px 32px;
+  text-align: center;
 }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Inter',sans-serif;
+.conteudo-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
-body{
-    background:
-        linear-gradient(rgba(0,0,0,.75), rgba(13,6,32,.95)),
-        url('../img/fundo.jpg') center/cover fixed;
-    color:white;
-    min-height:100vh;
+.conteudo-banner h1 {
+  font-family: var(--font-display);
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: white;
+  max-width: 600px;
 }
 
-/* ===== HEADER ===== */
-.barra-superior{
-    height:70px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:rgba(0,0,0,.5);
-    backdrop-filter:blur(10px);
-    border-bottom:1px solid var(--borda);
+.conteudo-banner h1 span {
+  color: var(--accent-bright);
 }
 
-.container-header{
-    width:100%;
-    max-width:1200px;
-    padding:0 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+.botao-criar-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 13px 32px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 8px 24px var(--accent-glow);
 }
 
-/* ===== BANNER ===== */
-.secao-boas-vindas{
-    text-align:center;
-    padding:60px 20px;
+.botao-criar-role:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px var(--accent-glow);
+  background: var(--accent-bright);
 }
 
-.conteudo-banner{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:25px;
+/* CARDS */
+.conteudo-principal {
+  padding: 0 24px 32px;
+  display: flex;
+  justify-content: center;
 }
 
-.conteudo-banner h1{
-    font-size:2rem;
-    font-weight:900;
-    line-height:1.2;
-    max-width:800px;
+.container-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  max-width: 1100px;
 }
 
-/* ===== BOTÕES ===== */
-.botao-criar-role,
-.botao-card{
-    border:none;
-    cursor:pointer;
-    transition:.3s;
+#amigos { display: contents; }
+
+.card-informativo,
+.container-amigos {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: all 0.25s ease;
+  min-height: 180px;
 }
 
-.botao-criar-role{
-    background:linear-gradient(135deg,var(--roxo),#4a0bc7);
-    color:white;
-    padding:15px 40px;
-    border-radius:50px;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(138,45,255,.4);
+.card-informativo:hover,
+.container-amigos:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  background: rgba(139, 92, 246, 0.06);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(139,92,246,0.08);
 }
 
-.botao-criar-role:hover{
-    transform:scale(1.05);
+.card-informativo h2,
+.container-amigos h3 {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-bright);
+  margin: 0;
 }
 
-.botao-card{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    background:var(--glass);
-    border:1px solid var(--borda);
-    color:white;
+.valor-destaque {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: white;
+  margin: 0;
 }
 
-.botao-card:hover{
-    background:white;
-    color:black;
+.botao-card,
+.btn-voltar-modal {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid var(--glass-border);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/* ===== CARDS ===== */
-.container-cards{
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    flex-wrap:wrap;
-    padding:20px;
+.botao-card:hover,
+.btn-voltar-modal:hover {
+  background: white;
+  color: black;
+  border-color: white;
 }
 
-.card-informativo{
-    width:350px;
-    padding:30px;
-    border-radius:20px;
-    text-align:center;
-
-    background:var(--glass);
-    backdrop-filter:blur(15px);
-    border:1px solid var(--borda);
-
-    transition:.3s;
+/* RODAPÉ STATUS */
+.rodape-status {
+  padding: 0 24px 40px;
+  display: flex;
+  justify-content: center;
 }
 
-.card-informativo:hover{
-    transform:translateY(-5px);
+.container-status-caixa {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  padding: 16px 28px;
+  border-radius: 50px;
 }
 
-.card-informativo h2{
-    font-size:.8rem;
-    letter-spacing:2px;
-    color:#aaa;
-    text-transform:uppercase;
+.semaforo-caixa {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  background: rgba(0,0,0,0.5);
+  padding: 10px 14px;
+  border-radius: 50px;
 }
 
-.valor-destaque{
-    font-size:3rem;
-    font-weight:900;
-    margin:15px 0;
+.luz-moderna {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+  transition: all 0.4s ease;
 }
 
-/* ===== RODAPÉ / SEMÁFORO ===== */
-.rodape-status{
-    display:flex;
-    justify-content:center;
-    padding:40px 0;
+.vermelha.aceso { background: var(--red); box-shadow: 0 0 14px var(--red); }
+.amarela.aceso { background: var(--yellow); box-shadow: 0 0 14px var(--yellow); }
+.verde.aceso { background: var(--green); box-shadow: 0 0 14px var(--green); }
+
+.label-status {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  display: block;
+  margin-bottom: 4px;
 }
 
-.container-status-caixa{
-    display:flex;
-    align-items:center;
-    gap:30px;
-
-    padding:20px 40px;
-    border-radius:30px;
-
-    background:rgba(0,0,0,.3);
-    backdrop-filter:blur(10px);
+#texto-status {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin: 0;
 }
 
-.semaforo-caixa{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-
-    padding:15px;
-    border-radius:50px;
-    background:black;
+.personagem-wrapper { position: relative; }
+.img-status-boneco {
+  width: 60px;
+  animation: flutuar 3s infinite ease-in-out;
 }
 
-.luz-moderna{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    background:#111;
+/* MODAL SALDO */
+#modalSaldo {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  z-index: 3000;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.2s ease;
+}
+#modalSaldo.mostrar-modal { display: flex !important; }
+
+/* RESPONSIVO */
+@media (max-width: 900px) {
+  .container-cards { grid-template-columns: repeat(2, 1fr); }
 }
 
-.vermelha.aceso{
-    background:var(--vermelho);
-    box-shadow:0 0 20px var(--vermelho);
-}
-
-.amarela.aceso{
-    background:var(--amarelo);
-    box-shadow:0 0 20px var(--amarelo);
-}
-
-.verde.aceso{
-    background:var(--verde);
-    box-shadow:0 0 20px var(--verde);
-}
-
-/* ===== TEXTO STATUS ===== */
-.label-status{
-    font-size:.7rem;
-    letter-spacing:2px;
-    color:var(--roxo);
-    font-weight:800;
-}
-
-#texto-status{
-    font-size:1.5rem;
-    font-weight:800;
-}
-
-/* ===== PERSONAGEM ===== */
-.img-status-boneco{
-    width:100px;
-    animation:flutuar 3s infinite ease-in-out;
-}
-
-@keyframes flutuar{
-    0%,100%{ transform:translateY(0); }
-    50%{ transform:translateY(-8px); }
+@media (max-width: 600px) {
+  .container-cards { grid-template-columns: 1fr; }
+  .conteudo-banner h1 { font-size: 1.3rem; }
+  .container-status-caixa { flex-direction: column; text-align: center; }
 }

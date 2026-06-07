@@ -22,17 +22,27 @@ const UserController = {
     login: async (req, res) => {
         try {
             const { Nick, senha } = req.body;
+            console.log("Tentativa de login para:", Nick);
+            
             const usuario = await User.findOne({ Nick });
-            if (!usuario) return res.redirect("/index_erro.html");
+            if (!usuario) {
+                console.log("Usuário não encontrado");
+                return res.redirect("/index_erro.html");
+            }
 
             const senhaOk = await bcrypt.compare(senha, usuario.senha);
+            console.log("Senha válida?", senhaOk); 
+
             if (senhaOk) {
                 req.session.usuarioLogado = usuario;
                 req.session.save(() => res.redirect("/menu_inicial.html"));
             } else {
                 res.redirect("/index_erro.html");
             }
-        } catch (erro) { res.status(500).send("Erro interno"); }
+        } catch (erro) { 
+            console.error("Erro no login:", erro);
+            res.status(500).send("Erro interno"); 
+        }
     },
 
     recuperar: async (req, res) => {

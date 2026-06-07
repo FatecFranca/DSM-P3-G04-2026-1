@@ -1,507 +1,286 @@
-/*  LAYOUT DA PÁGINA  */
+/* ═══════════════════════════════════════
+   MEUS ROLÊS CSS
+═══════════════════════════════════════ */
+
 .main-meus-roles {
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: calc(100vh - 80px);
-    /* Opcional: Adicionar um gradiente sutil no fundo se não tiver no global */
+  min-height: calc(100vh - 64px);
+  padding: 32px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cabecalho-pagina {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .titulo-pagina {
-    color: white;
-    font-size: 2.5rem;
-    margin-bottom: 40px;
-    font-weight: normal;
-    text-align: center;
-    font-family: 'Times New Roman', serif;
-    text-shadow: 0 4px 10px rgba(0,0,0,0.5); /* Sombra para destacar o texto */
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
 }
 
-/* Container Roxo Escuro  */
+.btn-novo-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 11px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 16px var(--accent-glow);
+}
+
+.btn-novo-role:hover {
+  background: var(--accent-bright);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--accent-glow);
+}
+
 .container-lista-roles {
-    background-color: #110b29; 
-    width: 100%;
-    max-width: 1100px;
-    padding: 50px;
-    border-radius: 12px; /* Arredondamento mais suave */
-    min-height: 400px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6); /* Sombra mais profunda */
-    border: 1px solid rgba(255, 255, 255, 0.05); /* Borda sutil */
+  width: 100%;
+  max-width: 1100px;
 }
 
-/* ESTILO DO CARD */
+/* CARDS DE EVENTO */
+#lista-eventos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
 .card-role {
-    margin-bottom: 25px;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-    background-color: transparent; 
-    height: auto; 
-    border: 1px solid rgba(255,255,255,0.05);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.25s ease;
 }
 
 .card-role:hover {
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  border-color: rgba(139,92,246,0.3);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.3);
 }
 
-/* Cabeçalho do Card (Mudado de Branco para Roxo Profundo) */
 .card-header {
-    background-color: #1F1147; /* Roxo escuro elegante */
-    color: #ffffff;
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 1.2rem;
-    font-family: 'Times New Roman', serif;
-    justify-content: space-between; 
-    position: relative; 
-    z-index: 2;
-    transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  cursor: pointer;
+  background: rgba(255,255,255,0.03);
+  transition: background 0.2s;
+  user-select: none;
 }
 
-.card-header:hover {
-    background-color: #2a1b6e; /* Clareia levemente ao passar o mouse */
+.card-header:hover { background: rgba(255,255,255,0.06); }
+
+.card-header-info { display: flex; flex-direction: column; gap: 4px; }
+
+.card-nome {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: white;
 }
 
-/* Seta */
+.card-meta {
+  font-size: 0.75rem;
+  color: var(--gray-500);
+}
+
 .seta-icon {
-    font-size: 1.2rem;
-    transition: transform 0.3s;
-    font-family: Arial, sans-serif; 
-    color: #a89eff; /* Cor lilás para a seta */
+  color: var(--accent-bright);
+  font-size: 0.9rem;
+  transition: transform 0.3s ease;
 }
 
-/* Corpo do Card (Mudado de Azul Puro para Roxo Médio) */
-.card-body {
-    background-color: #2a1b6e; /* Substituiu o #0000FF */
-    color: #e0e0e0; /* Branco levemente cinza para leitura confortável */
-    padding: 25px;
-    font-family: 'Times New Roman', serif;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    display: none; 
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Linha divisória sutil */
-}
+.card-role.aberto .seta-icon { transform: rotate(180deg); }
 
-/* Animação e Estado Aberto */
-.card-role.aberto .card-body {
-    display: block;
-    animation: abrirSuave 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação mais fluida */
-}
-
-.card-role.aberto .seta-icon {
-    transform: rotate(180deg);
-    color: #fff;
-}
-
-/* Quando aberto, o header fica um pouco mais claro para destacar */
 .card-role.aberto .card-header {
-    background-color: #33219A;
-    border-bottom: 1px solid rgba(0,0,0,0.2);
+  background: rgba(139,92,246,0.08);
+  border-bottom: 1px solid rgba(139,92,246,0.15);
 }
 
-@keyframes abrirSuave {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.card-body {
+  display: none;
+  padding: 20px;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.7);
+  border-top: 1px solid var(--glass-border);
 }
 
-/* Grid de Eventos */
-#lista-eventos {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+.card-role.aberto .card-body {
+  display: block;
+  animation: slideUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    #lista-eventos {
-        grid-template-columns: 1fr;
-    }
-    
-    .container-lista-roles {
-        padding: 25px;
-    }
-}
+/* CONVITES */
 .convite-destaque {
-    border-left: 5px solid var(--roxo-brilhante) !important;
-    background: rgba(138, 45, 255, 0.1) !important;
+  border-left: 3px solid var(--accent) !important;
 }
 
 .acoes-convite {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .btn-aceitar {
-    background: #00ff88;
-    color: #000;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
+  background: rgba(16,185,129,0.15);
+  color: var(--green);
+  border: 1px solid rgba(16,185,129,0.3);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
 }
+.btn-aceitar:hover { background: var(--green); color: #000; }
 
 .btn-recusar {
-    background: transparent;
-    color: #ff3b3b;
-    border: 1px solid #ff3b3b;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  background: rgba(239,68,68,0.08);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.2);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
 }
-
-.status-confirmado {
-    color: #00ff88;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.btn-excluir {
-    background: #ff3b3b;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.convite-destaque {
-    border-left: 5px solid var(--roxo-brilhante) !important;
-    background: rgba(138, 45, 255, 0.1) !important;
-}
-
-.acoes-convite {
-    display: flex;
-    gap: 10px;
-    justify-content: flex-end;
-}
-
-.btn-aceitar {
-    background: #00ff88;
-    color: #000;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.btn-recusar {
-    background: transparent;
-    color: #ff3b3b;
-    border: 1px solid #ff3b3b;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.status-confirmado {
-    color: #00ff88;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
+.btn-recusar:hover { background: var(--red); color: white; }
 
 .btn-excluir {
-    background: #ff3b3b;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
+  background: rgba(239,68,68,0.08);
+  color: #fca5a5;
+  border: 1px solid rgba(239,68,68,0.2);
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-excluir:hover { background: var(--red); color: white; }
+
+.status-confirmado {
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.8rem;
 }
 
+/* DIVISÃO */
 .sessao-divisao {
-    margin-top: 20px;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 16px;
+  background: rgba(0,0,0,0.15);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
 }
 
 .sessao-divisao h4 {
-    color: var(--roxo-brilhante);
-    font-size: 0.9rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-.card-split {
-    background: rgba(255, 255, 255, 0.03);
-    padding: 15px;
-    border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-bright);
+  margin-bottom: 12px;
 }
 
 .split-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 6px;
 }
 
 .split-line {
-    height: 1px;
-    background: rgba(255, 255, 255, 0.1);
-    margin: 10px 0;
+  height: 1px;
+  background: var(--glass-border);
+  margin: 10px 0;
 }
 
-.split-item.destaque {
-    color: #00ff88;
-}
-
-.valor-individual {
-    font-size: 1.2rem;
-}
-
-.lista-pagadores {
-    margin-top: 15px;
-}
-
-.lista-pagadores ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 5px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.lista-pagadores li {
-    font-size: 0.75rem;
-    background: var(--glass);
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid var(--glass-border);
-}
-.lista-divisao-manual {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+.split-item.destaque { color: var(--green); font-weight: 700; }
 
 .pagador-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255,255,255,0.05);
-    padding: 10px;
-    border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
 }
 
 .input-divisao {
-    background: #000;
-    border: 1px solid var(--roxo-brilhante);
-    color: #00ff88;
-    width: 80px;
-    padding: 5px;
-    border-radius: 4px;
-    text-align: right;
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--accent);
+  color: var(--green);
+  width: 80px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  text-align: right;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  outline: none;
 }
 
 .btn-salvar-divisao {
-    margin-top: 15px;
-    width: 100%;
-    background: var(--roxo-brilhante);
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+  width: 100%;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-family: var(--font-body);
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
 }
-
-.status-soma {
-    margin-top: 10px;
-    font-size: 0.8rem;
-    font-weight: bold;
-}
-.user-meta {
-    display: flex;
-    flex-direction: column;
-}
-
-.user-meta small {
-    color: #ffcc00;
-    font-size: 0.7rem;
-}
-
-.btn-mini-remover {
-    background: #ff3b3b;
-    color: white;
-    border: none;
-    font-size: 0.6rem;
-    padding: 2px 6px;
-    border-radius: 3px;
-    cursor: pointer;
-    margin-top: 4px;
-    width: fit-content;
-}
+.btn-salvar-divisao:hover { background: var(--accent-bright); }
 
 .btn-convidar-mais {
-    margin-top: 15px;
-    background: transparent;
-    border: 1px dashed var(--roxo-brilhante);
-    color: var(--roxo-brilhante);
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
+  width: 100%;
+  background: transparent;
+  border: 1px dashed rgba(139,92,246,0.4);
+  color: var(--accent-bright);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: all 0.2s;
 }
+.btn-convidar-mais:hover { background: rgba(139,92,246,0.08); }
 
-.btn-convidar-mais:hover {
-    background: rgba(138, 45, 255, 0.1);
-}
-/* Importando as variáveis se necessário */
-@import url('global.css');
-
-.main-meus-roles {
-    padding: 40px 20px;
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.titulo-pagina {
-    text-align: center;
-    margin-bottom: 40px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 2rem;
-}
-
-/* Card Principal (Estilo Glassmorphism) */
-.card-role {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--borda-glass, rgba(255, 255, 255, 0.1));
-    border-radius: 20px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    transition: 0.3s;
-}
-
-.card-role:hover {
-    border-color: var(--roxo-brilhante, #8a2dff);
-    background: rgba(255, 255, 255, 0.06);
-}
-
-/* Cabeçalho do Card */
-.card-header {
-    padding: 20px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    font-weight: 700;
-    font-size: 1.1rem;
-}
-
-.card-header span {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* Corpo do Card (Detalhes) */
-.card-body {
-    padding: 0 25px 25px 25px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-/* Elementos dentro do Card */
-.sessao-info {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    padding: 15px 0;
-}
-
-.sessao-divisao h4 {
-    color: var(--roxo-brilhante, #8a2dff);
-    margin: 15px 0 10px 0;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-}
-
-/* Linha de participantes */
-.pagador-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0,0,0,0.2);
-    padding: 10px 15px;
-    border-radius: 10px;
-    margin-bottom: 8px;
-}
-
-/* Botões dentro dos Cards */
-.btn-salvar-divisao, .btn-excluir {
-    padding: 10px 20px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-.btn-salvar-divisao { background: #8a2dff; color: white; width: 100%; }
-.btn-excluir { background: #ff3b3b; color: white; }
-
-/* Botão Novo Rolê */
-.btn-novo-role {
-    display: block;
-    margin: 40px auto;
-    padding: 15px 40px;
-    background: linear-gradient(135deg, #8a2dff, #4a0bc7);
-    color: white;
-    border: none;
-    border-radius: 50px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    width: fit-content;
-}
-/* Container de cada linha de usuário */
-.pagador-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-/* O seletor flutuante de convite */
-.seletor-flutuante {
-    background: #1a0f40;
-    padding: 20px;
-    border-radius: 15px;
-    margin-top: 15px;
-    border: 1px solid var(--roxo-brilhante);
-}
-
-.item-amigo-convite {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.btn-pode-convidar {
-    background: #4a09ff;
-    border: none;
-    padding: 5px 12px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
+/* RESPONSIVO */
+@media (max-width: 768px) {
+  #lista-eventos { grid-template-columns: 1fr; }
+  .cabecalho-pagina { flex-direction: column; align-items: flex-start; }
 }

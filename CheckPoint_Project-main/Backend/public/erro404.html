@@ -2,56 +2,151 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Erro 404</title>
+    <title>404 | CheckPoint</title>
     <link rel="icon" href="img/icon.png" type="image/png" sizes="32x32">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+
     <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            margin: 0;
-            padding: 0;
-            background: #0d0d0d;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #e6e6e6;
+            min-height: 100dvh;
+            background: #0e0e0f;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: center;
+            font-family: 'DM Sans', sans-serif;
             text-align: center;
+            padding: 2rem;
         }
 
-        h1 {
-            margin: 5px;
-            font-size: 2.2rem;
-            color: #bb86fc;
+        /* Blobs */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::before {
+            width: 360px; height: 360px;
+            background: #4b0066;
+            opacity: 0.2;
+            top: -100px; left: -100px;
+        }
+        body::after {
+            width: 280px; height: 280px;
+            background: #7c00a8;
+            opacity: 0.15;
+            bottom: -80px; right: -80px;
         }
 
-        h2 a {
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .brand {
+            font-family: 'Syne', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            color: #c084fc;
+            margin-bottom: 32px;
+        }
+
+        .code {
+            font-family: 'Syne', sans-serif;
+            font-size: 120px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -6px;
+            background: linear-gradient(135deg, #7c00a8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.7; }
+        }
+
+        .msg {
+            font-family: 'Syne', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #f4f4f5;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .sub {
+            font-size: 14px;
+            color: #52525b;
+            margin-bottom: 36px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            height: 46px;
+            padding: 0 28px;
+            background: #7c00a8;
+            border: none;
+            border-radius: 10px;
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
             text-decoration: none;
-            color: white;
-            background: #7c4dff;
-            padding: 10px 18px;
-            border-radius: 8px;
-            transition: 0.2s;
-            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        h2 a:hover {
-            background: #6933ff;
-            transform: scale(1.05);
-        }
+        .btn:hover  { background: #9400c8; }
+        .btn:active { transform: scale(0.97); }
 
+        .btn svg { width: 16px; height: 16px; }
+
+        @media (max-width: 400px) {
+            .code { font-size: 88px; letter-spacing: -4px; }
+            .msg  { font-size: 17px; }
+        }
     </style>
 </head>
 <body>
+    <div class="content">
+    
 
-    <h1>Página Não Encontrada!!!</h1>    
-    <h1>Page not found...!!!</h1>    
+        <div class="code">404</div>
 
-    <br><br>
+        <h1 class="msg">Página não encontrada</h1>
+        <p class="sub">O endereço que você acessou não existe.</p>
 
-    <h2><a href="index.html">Voltar para a Raiz</a></h2>
-
+        <a href="index.html" class="btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            Voltar ao início
+        </a>
+    </div>
 </body>
 </html>
